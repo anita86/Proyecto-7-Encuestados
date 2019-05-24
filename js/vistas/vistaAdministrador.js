@@ -11,7 +11,7 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   this.modelo.preguntaAgregada.suscribir(function() {
     contexto.reconstruirLista();
   });
-  
+
   this.modelo.preguntaEliminada.suscribir(function() {
     contexto.reconstruirLista();
   });
@@ -32,8 +32,8 @@ VistaAdministrador.prototype = {
     //completar
     //LISTO!! asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
     var nuevoItem = $('<li>', {
-      'class' : 'list-group-item', 
-      'id' : 'pregunta.id', 
+      'class' : 'list-group-item',
+      'id' : 'pregunta.id',
       'texto' : 'pregunta.textoPregunta'
     });
     var interiorItem = $('.d-flex');
@@ -67,7 +67,7 @@ VistaAdministrador.prototype = {
       $('[name="option[]"]').each(function() {
         //completar
         var respuesta = $(this).val();
-        if (respuesta.length > 0) {
+        if (respuesta != ' ') {
           respuestas.push({
             'textoRespuesta' : respuesta,
             'cantidad' : 0
