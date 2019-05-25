@@ -8,6 +8,8 @@ var Modelo = function() {
   //inicializacion de eventos
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
+  this.verificarLocalStorage();
+
 };
 
 Modelo.prototype = {
@@ -32,9 +34,18 @@ Modelo.prototype = {
   },
 
   //se guardan las preguntas
+  verificarLocalStorage: function(){
+    if (localStorage.getItem('preguntas') !== null) {
+      this.preguntas = JSON.parse(localStorage.getItem('preguntas'));
+    }
+  },
+
+  reiniciarLocalStorage: function(){
+    localStorage.setItem('preguntas', JSON.stringify([]));
+  },
+
   guardar: function(){
     localStorage.setItem('preguntas', JSON.stringify(this.preguntas));
-
   },
 
   //Se borra la pregunta seleccionada por su Id
