@@ -9,7 +9,7 @@ Controlador.prototype = {
   agregarPregunta: function(pregunta, respuestas) {
       this.modelo.agregarPregunta(pregunta, respuestas);
   },
-
+//guia 1 LISTO!!
   borrarPregunta: function(id) {
       this.modelo.borrarPregunta(id);
   },
