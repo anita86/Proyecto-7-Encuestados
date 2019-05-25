@@ -65,7 +65,7 @@ VistaAdministrador.prototype = {
       var respuestas = [];
 
       $('[name="option[]"]').each(function() {
-        //completar
+        //completar LIsTO!! Ok
         var respuesta = $(this).val();
         if (respuesta != ' ') {
           respuestas.push({

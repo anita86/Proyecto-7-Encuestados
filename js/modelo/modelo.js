@@ -33,15 +33,26 @@ Modelo.prototype = {
 
   //se guardan las preguntas
   guardar: function(){
+    localStorage.setItem('preguntas', JSON.stringify(this.preguntas));
 
   },
 
   //Se borra la pregunta seleccionada por su Id
   borrarPregunta : function(id){
-    var preguntasFiltradas = this.preguntas.filter(pregunta => pregunta.id !== id);
-    this.preguntas = preguntasFiltradas; 
-    this.guardar();
-    this.preguntaEliminada.notificar();
-  }
-
-};
+    // var preguntasFiltradas = this.preguntas.filter(pregunta => pregunta.id !== id);
+    // this.preguntas = preguntasFiltradas;
+    // this.guardar();
+    // this.preguntaEliminada.notificar();
+    //recorrer array de respuestas, identificar al id q quiero borrar y hacerlo con splice
+  //   var index = this.preguntas.indexOf(id,0);
+  //   this.preguntas.splice(index,1);
+  //   this.guardar();
+  //   this.preguntaEliminada.notificar();
+  // }
+  this.preguntas = this.preguntas.filter(function(pregunta) {
+    return pregunta.id != id;
+    })
+   this.guardar();
+   this.preguntaEliminada.notificar();
+}
+}
