@@ -8,10 +8,12 @@ var Modelo = function() {
   //inicializacion de eventos
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
+  this.verificarLocalStorage();
+
 };
 
 Modelo.prototype = {
-  //se obtiene el id más grande asignado a una pregunta
+  //guia 1 LISTO!! se obtiene el id más grande asignado a una pregunta
   obtenerUltimoId: function() {
     var maxId = -1;
     for (var i = 0; i < this.preguntas.length; ++i){
@@ -32,27 +34,24 @@ Modelo.prototype = {
   },
 
   //se guardan las preguntas
-  guardar: function(){
-    localStorage.setItem('preguntas', JSON.stringify(this.preguntas));
-
+  verificarLocalStorage: function(){
+    if (localStorage.getItem('preguntas') !== null) {
+      this.preguntas = JSON.parse(localStorage.getItem('preguntas'));
+    }
   },
 
-  //Se borra la pregunta seleccionada por su Id
+  reiniciarLocalStorage: function(){
+    localStorage.setItem('preguntas', JSON.stringify([]));
+  },
+
+  guardar: function(){
+    localStorage.setItem('preguntas', JSON.stringify(this.preguntas));
+  },
+
+  //guia 1 LISTO!! Se borra la pregunta seleccionada por su Id
   borrarPregunta : function(id){
-    // var preguntasFiltradas = this.preguntas.filter(pregunta => pregunta.id !== id);
-    // this.preguntas = preguntasFiltradas;
-    // this.guardar();
-    // this.preguntaEliminada.notificar();
-    //recorrer array de respuestas, identificar al id q quiero borrar y hacerlo con splice
-  //   var index = this.preguntas.indexOf(id,0);
-  //   this.preguntas.splice(index,1);
-  //   this.guardar();
-  //   this.preguntaEliminada.notificar();
-  // }
-  this.preguntas = this.preguntas.filter(function(pregunta) {
-    return pregunta.id != id;
-    })
-   this.guardar();
-   this.preguntaEliminada.notificar();
+    this.preguntas = this.preguntas.filter(pregunta => pregunta.id !== id);
+    this.guardar();
+    this.preguntaEliminada.notificar();
 }
 }
