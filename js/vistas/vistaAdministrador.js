@@ -11,7 +11,7 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   this.modelo.preguntaAgregada.suscribir(function() {
     contexto.reconstruirLista();
   });
-
+//guia 1 LISTO!!
   this.modelo.preguntaEliminada.suscribir(function() {
     contexto.reconstruirLista();
   });
@@ -21,21 +21,17 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
 VistaAdministrador.prototype = {
   //lista
   inicializar: function() {
-    //LISTO!! llamar a los metodos para reconstruir la lista, configurar botones y validar formularios
-    validacionDeFormulario();
+    //guia 1 LISTO!! llamar a los metodos para reconstruir la lista, configurar botones y validar formularios
     this.reconstruirLista();
     this.configuracionDeBotones();
+    validacionDeFormulario();
   },
 
   construirElementoPregunta: function(pregunta){
     var contexto = this;
     //completar
-    //LISTO!! asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
-    var nuevoItem = $('<li>', {
-      'class' : 'list-group-item',
-      'id' : 'pregunta.id',
-      'texto' : 'pregunta.textoPregunta'
-    });
+    //guia 1 LISTO!!asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
+    var nuevoItem = $('<li></li>').addClass("list-group-item").attr('id', pregunta.id);
     var interiorItem = $('.d-flex');
     var titulo = interiorItem.find('h5');
     titulo.text(pregunta.textoPregunta);
@@ -65,7 +61,7 @@ VistaAdministrador.prototype = {
       var respuestas = [];
 
       $('[name="option[]"]').each(function() {
-        //completar LIsTO!! Ok
+        //completar //guia 1 LISTO!!
         var respuesta = $(this).val();
         if (respuesta != ' ') {
           respuestas.push({
@@ -79,7 +75,7 @@ VistaAdministrador.prototype = {
     });
 
     //asociar el resto de los botones a eventos
-    //LISTO!! Registro boton para borrar la pregunta
+    //guia 1 LISTO!! Registro boton para borrar la pregunta
     e.botonBorrarPregunta.click(function() {
       var id = parseInt($('.list-group-item.active').attr('id'))
       contexto.controlador.borrarPregunta(id);
