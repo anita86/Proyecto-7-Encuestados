@@ -64,30 +64,21 @@ Modelo.prototype = {
     this.preguntasBorradas.notificar();
   },
 
-  encontrarIndice : function (id){
-    var index = this.preguntas.findIndex(x => x.id === id);
-    return index;
-  },
+  editarPregunta: function(id) {
+  var nuevaPregunta = prompt ("Escriba su pregunta");
+  var index =  this.encontrarIndex(this.preguntas[].id);
+  this.preguntas[index].textoPregunta = nuevaPregunta;
+  this.guardar();
+  this.preguntaEditada.notificar();
+},
 
-  editarPregunta : function(preguntaAEditar){
-    var inputPregunta = prompt ('Por favor, cargá el nuevo texto de la pregunta:');
-    var nuevoNombrePregunta = {'textoPregunta': nombre};
-
-    if (validarPrompt(inputPregunta) !== false) {
-      var index =  this.encontrarIndice(preguntaAEditar[0].id);
-      this.preguntas[index].textoPregunta = nuevoNombrePregunta;
-      this.guardar();
-      this.preguntaEditada.notificar();
-    } else {
-      alert ("Intente nuevamente");
+encontrarIndex: function(indice) {
+  for(var i=0; i<this.preguntas.length; i++){
+    if(indice==this.preguntas[i].id)
+    {
+      return i;
     }
-  },
-
-  validarPrompt : function(input){
-      if (' '(input)) {
-        alert("Algo anda mal! No ingresaste la nueva pregunta");
-        return false;
-      }
-    },
+  }
+},
 
 }
