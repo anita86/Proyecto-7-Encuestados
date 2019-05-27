@@ -16,8 +16,14 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
     contexto.reconstruirLista();
   });
 
+  //guia 2
+  // editar una pregunta, agregar los votos, borrar todas las preguntas. Local storage
   this.modelo.preguntasBorradas.suscribir(function() {
     contexto.reconstruirLista();
+  });
+
+  this.modelo.preguntaEditada.suscribir(function() {
+      contexto.reconstruirLista();
   });
 };
 
@@ -77,7 +83,6 @@ VistaAdministrador.prototype = {
       contexto.limpiarFormulario();
       contexto.controlador.agregarPregunta(value, respuestas);
     });
-
     //asociar el resto de los botones a eventos
     //guia 1 LISTO!! Registro boton para borrar la pregunta
     e.botonBorrarPregunta.click(function() {
@@ -88,6 +93,12 @@ VistaAdministrador.prototype = {
     e.borrarTodo.click(function() {
       contexto.controlador.borrarTodo();
     });
+
+    e.botonEditarPregunta.click(function(id) {
+      var id = parseInt($('.list-group-item.active').attr('id'))
+      contexto.controlador.editarPregunta(id);
+    });
+
   },
 
   limpiarFormulario: function(){

@@ -9,6 +9,7 @@ var Modelo = function() {
   this.preguntaAgregada = new Evento(this);
   this.preguntaEliminada = new Evento(this);
   this.preguntasBorradas = new Evento(this);
+  this.preguntaEditada = new Evento(this);
 
   this.verificarLocalStorage();
 
@@ -61,6 +62,32 @@ Modelo.prototype = {
     this.preguntas.splice(0, this.preguntas.length);
     this.guardar();
     this.preguntasBorradas.notificar();
-  }
+  },
+
+  encontrarIndice : function (id){
+    var index = this.preguntas.findIndex(x => x.id === id);
+    return index;
+  },
+
+  editarPregunta : function(preguntaAEditar){
+    var inputPregunta = prompt ('Por favor, cargá el nuevo texto de la pregunta:');
+    var nuevoNombrePregunta = {'textoPregunta': nombre};
+
+    if (validarPrompt(inputPregunta) !== false) {
+      var index =  this.encontrarIndice(preguntaAEditar[0].id);
+      this.preguntas[index].textoPregunta = nuevoNombrePregunta;
+      this.guardar();
+      this.preguntaEditada.notificar();
+    } else {
+      alert ("Intente nuevamente");
+    }
+  },
+
+  validarPrompt : function(input){
+      if (' '(input)) {
+        alert("Algo anda mal! No ingresaste la nueva pregunta");
+        return false;
+      }
+    },
 
 }
