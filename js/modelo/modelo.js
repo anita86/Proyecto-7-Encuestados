@@ -48,7 +48,9 @@ Modelo.prototype = {
     this.guardar();
     this.preguntasBorradas.notificar();
   },
+
   editarPregunta: function(id) {
+  var id = parseInt($('.list-group-item.active').attr('id'));
   var nuevaPregunta = prompt ("Escriba su pregunta");
   var index =  this.encontrarIndex(this.preguntas[0].id);
   this.preguntas[index].textoPregunta = nuevaPregunta;
