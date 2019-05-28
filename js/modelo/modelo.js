@@ -65,20 +65,15 @@ Modelo.prototype = {
   },
 
   editarPregunta: function(id) {
-  var nuevaPregunta = prompt ("Escriba su pregunta");
-  var index =  this.encontrarIndex(this.preguntas[].id);
-  this.preguntas[index].textoPregunta = nuevaPregunta;
-  this.guardar();
-  this.preguntaEditada.notificar();
-},
+    var index = this.obtenerPosicionArr(idPregunta);
+    this.preguntas.splice(index, 1, inputNuevo);
+    this.guardar();
+    this.preguntaEditada.notificar();
+  },
 
-encontrarIndex: function(indice) {
-  for(var i=0; i<this.preguntas.length; i++){
-    if(indice==this.preguntas[i].id)
-    {
-      return i;
-    }
-  }
-},
+  obtenerPosicionArr: function(id) {
+    var index = this.preguntas.findIndex(x => x.id === id);
+    return index
+  },
 
 }
