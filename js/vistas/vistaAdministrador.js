@@ -94,9 +94,10 @@ VistaAdministrador.prototype = {
       contexto.controlador.borrarTodo();
     });
 
-    e.botonEditarPregunta.click(function(id) {
+    e.botonEditarPregunta.click(function(id, inputNuevo) {
       var id = parseInt($('.list-group-item.active').attr('id'))
-      contexto.controlador.editarPregunta(id);
+      var inputNuevo = prompt ("Escriba su pregunta");
+      contexto.controlador.editarPregunta(id, inputNuevo);
     });
 
   },
