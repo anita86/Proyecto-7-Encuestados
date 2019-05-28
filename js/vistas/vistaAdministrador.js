@@ -86,7 +86,7 @@ VistaAdministrador.prototype = {
     //asociar el resto de los botones a eventos
     //guia 1 LISTO!! Registro boton para borrar la pregunta
     e.botonBorrarPregunta.click(function() {
-      var id = parseInt($('.list-group-item.active').attr('id'))
+      var id = parseInt($('.list-group-item.active').attr('id'));
       contexto.controlador.borrarPregunta(id);
     });
 
@@ -95,7 +95,7 @@ VistaAdministrador.prototype = {
     });
 
     e.botonEditarPregunta.click(function(id) {
-      var id = parseInt($('.list-group-item.active').attr('id'))
+      var id = parseInt($('.list-group-item.active').attr('id'));
       contexto.controlador.editarPregunta(id);
     });
 

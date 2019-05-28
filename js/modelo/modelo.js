@@ -11,7 +11,7 @@ var Modelo = function() {
   this.preguntasBorradas = new Evento(this);
   this.preguntaEditada = new Evento(this);
 
-  this.verificarLocalStorage();
+  // this.verificarLocalStorage();
 
 };
 
@@ -36,21 +36,6 @@ Modelo.prototype = {
     this.preguntaAgregada.notificar();
   },
 
-  //se guardan las preguntas
-  verificarLocalStorage: function(){
-    if (localStorage.getItem('preguntas') !== null) {
-      this.preguntas = JSON.parse(localStorage.getItem('preguntas'));
-    }
-  },
-
-  reiniciarLocalStorage: function(){
-    localStorage.setItem('preguntas', JSON.stringify([]));
-  },
-
-  guardar: function(){
-    localStorage.setItem('preguntas', JSON.stringify(this.preguntas));
-  },
-
   //guia 1 LISTO!! Se borra la pregunta seleccionada por su Id
   borrarPregunta : function(id){
     this.preguntas = this.preguntas.filter(pregunta => pregunta.id !== id);
@@ -64,29 +49,44 @@ Modelo.prototype = {
     this.preguntasBorradas.notificar();
   },
   editarPregunta: function(id) {
-//   var nuevaPregunta = prompt ("Escriba su pregunta");
-//   var index =  this.encontrarIndex(this.preguntas[].id);
-//   this.preguntas[index].textoPregunta = nuevaPregunta;
-//   this.guardar();
-//   this.preguntaEditada.notificar();
-// },
-    var index = this.obtenerPosicionArr(idPregunta);
-    this.preguntas.splice(index, 1, inputNuevo);
-    this.guardar();
-    this.preguntaEditada.notificar();
-  },
-// 
-// encontrarIndex: function(indice) {
-//   for(var i=0; i<this.preguntas.length; i++){
-//     if(indice==this.preguntas[i].id)
-//     {
-//       return i;
-//     }
-//   }
-// },
-  obtenerPosicionArr: function(id) {
-    var index = this.preguntas.findIndex(x => x.id === id);
-    return index
+  var nuevaPregunta = prompt ("Escriba su pregunta");
+  var index =  this.encontrarIndex(this.preguntas[0].id);
+  this.preguntas[index].textoPregunta = nuevaPregunta;
+  this.guardar();
+  this.preguntaEditada.notificar();
+},
+  //   var index = this.obtenerPosicionArr(idPregunta);
+  //   this.preguntas.splice(index, 1, inputNuevo);
+  //   this.guardar();
+  //   this.preguntaEditada.notificar();
+  // },
+
+encontrarIndex: function(indice) {
+  for(var i=0; i<this.preguntas.length; i++){
+    if(indice==this.preguntas[i].id)
+    {
+      return i;
+    }
+  }
+},
+  // obtenerPosicionArr: function(id) {
+  //   var index = this.preguntas.findIndex(x => x.id === id);
+  //   return index
+  // },
+
+  //se guardan las preguntas
+  // verificarLocalStorage: function(){
+  //   if (localStorage.getItem('preguntas') !== null) {
+  //     this.preguntas = JSON.parse(localStorage.getItem('preguntas'));
+  //   }
+  // },
+
+  // reiniciarLocalStorage: function(){
+  //   localStorage.setItem('preguntas', JSON.stringify([]));
+  // },
+
+  guardar: function(){
+    localStorage.setItem('preguntas', JSON.stringify(this.preguntas));
   },
 
 }
