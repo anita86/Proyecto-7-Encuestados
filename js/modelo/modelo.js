@@ -10,8 +10,7 @@ var Modelo = function() {
   this.preguntaEliminada = new Evento(this);
   this.preguntasBorradas = new Evento(this);
   this.preguntaEditada = new Evento(this);
-
-  // this.verificarLocalStorage();
+  this.recuperarPreguntas();
 
 };
 
@@ -36,6 +35,11 @@ Modelo.prototype = {
     this.preguntaAgregada.notificar();
   },
 
+  obtenerPosicionArr: function(id) {
+    var index = this.preguntas.findIndex(x => x.id === id);
+    return index
+  },
+
   //guia 1 LISTO!! Se borra la pregunta seleccionada por su Id
   borrarPregunta : function(id){
     this.preguntas = this.preguntas.filter(pregunta => pregunta.id !== id);
@@ -49,46 +53,34 @@ Modelo.prototype = {
     this.preguntasBorradas.notificar();
   },
 
-  editarPregunta: function(id) {
-  var id = parseInt($('.list-group-item.active').attr('id'));
-  var nuevaPregunta = prompt ("Escriba su pregunta");
-  var index =  this.encontrarIndex(this.preguntas[0].id);
-  this.preguntas[index].textoPregunta = nuevaPregunta;
-  this.guardar();
-  this.preguntaEditada.notificar();
-},
-  //   var index = this.obtenerPosicionArr(idPregunta);
-  //   this.preguntas.splice(index, 1, inputNuevo);
-  //   this.guardar();
-  //   this.preguntaEditada.notificar();
-  // },
+  editarPregunta: function(PreguntaAEditar) {
+    var nuevaPregunta = prompt ("Escriba su pregunta");
+    var index =  this.encontrarIndex(PreguntaAEditar[i].id);
+    this.preguntas[index].textoPregunta = nuevaPregunta;
+    this.guardar();
+    this.preguntaEditada.notificar();
+  },
 
-encontrarIndex: function(indice) {
-  for(var i=0; i<this.preguntas.length; i++){
-    if(indice==this.preguntas[i].id)
-    {
-      return i;
+  encontrarIndex: function(indice) {
+    for(var i=0; i<this.preguntas.length; i++){
+      if(indice==this.preguntas[i].id)
+      {
+        return i;
+      }
     }
-  }
-},
-  // obtenerPosicionArr: function(id) {
-  //   var index = this.preguntas.findIndex(x => x.id === id);
-  //   return index
-  // },
+  },
 
   //se guardan las preguntas
-  // verificarLocalStorage: function(){
-  //   if (localStorage.getItem('preguntas') !== null) {
-  //     this.preguntas = JSON.parse(localStorage.getItem('preguntas'));
-  //   }
-  // },
-
-  // reiniciarLocalStorage: function(){
-  //   localStorage.setItem('preguntas', JSON.stringify([]));
-  // },
-
   guardar: function(){
-    localStorage.setItem('preguntas', JSON.stringify(this.preguntas));
+    localStorage.setItem("preguntasAlmacenadas",JSON.stringify(this.preguntas));
+  },
+//Se recuperan las preguntas
+  recuperarPreguntas: function() {
+    if (localStorage.getItem('preguntasAlmacenadas') !== null) {
+        this.preguntas = JSON.parse(localStorage.getItem('preguntasAlmacenadas'));
+      } else {
+        localStorage.setItem('preguntasAlmacenadas', JSON.stringify([]));
+      }
   },
 
 }

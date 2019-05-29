@@ -15,9 +15,7 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   this.modelo.preguntaEliminada.suscribir(function() {
     contexto.reconstruirLista();
   });
-
-  //guia 2
-  // editar una pregunta, agregar los votos, borrar todas las preguntas. Local storage
+  //guia 2: borrar todas las preguntas, editar una pregunta, agregar los votos, . Local storage
   this.modelo.preguntasBorradas.suscribir(function() {
     contexto.reconstruirLista();
   });
@@ -67,36 +65,47 @@ VistaAdministrador.prototype = {
 
     //asociacion de eventos a boton
     e.botonAgregarPregunta.click(function() {
-      var value = e.pregunta.val();
+      var pregunta = e.pregunta.val();
       var respuestas = [];
 
       $('[name="option[]"]').each(function() {
         //completar //guia 1 LISTO!!
-        var respuesta = $(this).val();
-        if (respuesta != ' ') {
-          respuestas.push({
-            'textoRespuesta' : respuesta,
-            'cantidad' : 0
-          });
-        }
+      var respuesta = $(this).val();
+
+      respuestas.push({ 'textoRespuesta' : respuesta,'cantidad' : 0});
       })
+
+      if(respuestas[0].textoRespuesta == ''){
+        alert('Escribi una pregunta con sus respuestas')
+        return
+      }
       contexto.limpiarFormulario();
-      contexto.controlador.agregarPregunta(value, respuestas);
+      contexto.controlador.agregarPregunta(pregunta, respuestas);
     });
+
     //asociar el resto de los botones a eventos
     //guia 1 LISTO!! Registro boton para borrar la pregunta
     e.botonBorrarPregunta.click(function() {
       var id = parseInt($('.list-group-item.active').attr('id'));
-      contexto.controlador.borrarPregunta(id);
+      if(isNaN(id)) {
+        alert("Elegi que pregunta queres borrar");
+      } else {
+        contexto.controlador.borrarPregunta(id)
+      }
     });
 
     e.borrarTodo.click(function() {
+      alert('Estás a punto de borrar todas las preguntas');
       contexto.controlador.borrarTodo();
     });
 
-    e.botonEditarPregunta.click(function(id) {
-      var id = parseInt($('.list-group-item.active').attr('id'));
-      contexto.controlador.editarPregunta(id);
+    e.botonEditarPregunta.click(function() {
+      var preguntaSeleccionada = parseInt($('.list-group-item.active').attr('id'));
+      if(isNaN(preguntaSeleccionada)) {
+          alert("Elegi la pregunta que querés editar");
+          return
+      }
+      contexto.controlador.editarPregunta(preguntaSeleccionada);
     });
 
   },
