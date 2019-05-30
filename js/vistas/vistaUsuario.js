@@ -11,6 +11,21 @@ var VistaUsuario = function(modelo, controlador, elementos) {
   this.modelo.preguntaAgregada.suscribir(function() {
     contexto.reconstruirLista();
   });
+  this.modelo.preguntaEliminada.suscribir(function() {
+    contexto.reconstruirLista();
+  });
+
+  this.modelo.preguntasBorradas.suscribir(function() {
+    contexto.reconstruirLista();
+  });
+
+  this.modelo.preguntaEditada.suscribir(function() {
+      contexto.reconstruirLista();
+  });
+
+  this.modelo.votoSumado.suscribir(function() {
+      contexto.reconstruirLista();
+  });
 };
 
 VistaUsuario.prototype = {
@@ -19,11 +34,11 @@ VistaUsuario.prototype = {
     this.reconstruirLista();
     var elementos = this.elementos;
     var contexto = this;
-    
+
     elementos.botonAgregar.click(function() {
-      contexto.agregarVotos(); 
+      contexto.agregarVotos();
     });
-      
+
     this.reconstruirGrafico();
   },
 
@@ -31,7 +46,7 @@ VistaUsuario.prototype = {
   reconstruirGrafico: function(){
     var contexto = this;
     //obtiene las preguntas del local storage
-    var preguntas = this.modelo.preguntas;
+    var preguntas = JSON.parse(localStorage.getItem('preguntasAlmacenadas'));
     preguntas.forEach(function(clave){
       var listaParaGrafico = [[clave.textoPregunta, 'Cantidad']];
       var respuestas = clave.cantidadPorRespuesta;
@@ -51,6 +66,11 @@ VistaUsuario.prototype = {
     preguntas.forEach(function(clave){
       //completar
       //agregar a listaPreguntas un elemento div con valor "clave.textoPregunta", texto "clave.textoPregunta", id "clave.id"
+      listaPreguntas.append($('<div>', {
+        texto: clave.textoPregunta,
+        valor: clave.textoPregunta,
+        id: clave.id,
+      }));
       var respuestas = clave.cantidadPorRespuesta;
       contexto.mostrarRespuestas(listaPreguntas,respuestas, clave);
     })

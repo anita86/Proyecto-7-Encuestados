@@ -23,6 +23,10 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   this.modelo.preguntaEditada.suscribir(function() {
       contexto.reconstruirLista();
   });
+  
+  this.modelo.votoSumado.suscribir(function() {
+      contexto.reconstruirLista();
+  });
 };
 
 

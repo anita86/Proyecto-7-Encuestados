@@ -10,6 +10,7 @@ var Modelo = function() {
   this.preguntaEliminada = new Evento(this);
   this.preguntasBorradas = new Evento(this);
   this.preguntaEditada = new Evento(this);
+  this.votoSumado = new Evento(this);
   this.recuperarPreguntas();
 
 };
@@ -64,6 +65,14 @@ Modelo.prototype = {
         }
       this.guardar();
       this.preguntaEditada.notificar();
+  },
+
+  sumarVoto : function (){
+    var index = this.obtenerPosicionArr(idPregunta);
+    var respuestaVotada = this.preguntas[index].cantidadPorRespuesta.findIndex(x => x.textoRespuesta === respuestaSeleccionada);
+    this.preguntas[index].cantidadPorRespuesta[respuestaSeleccionada].cantidad += 1;
+    this.guardar();
+    this.agregarVoto.notificar();
   },
 
   //se guardan las preguntas

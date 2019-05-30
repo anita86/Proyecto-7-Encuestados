@@ -21,4 +21,8 @@ Controlador.prototype = {
       this.modelo.editarPregunta(id);
   },
 
+  agregarVoto: function() {
+      this.modelo.agregarVoto();
+  },
+
 };
