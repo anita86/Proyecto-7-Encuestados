@@ -73,11 +73,6 @@ VistaAdministrador.prototype = {
       respuestas.push({ 'textoRespuesta' : this.value,'cantidad' : 0});
       });
 
-      if(respuestas.length < 2){
-        alert("Debe proporcionar al menos dos respuestas.");
-        return
-      };
-
       if(respuestas[0].textoRespuesta == ''){
         alert('Escribí una pregunta con sus respuestas');
         return
