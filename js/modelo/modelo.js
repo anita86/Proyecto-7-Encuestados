@@ -35,11 +35,6 @@ Modelo.prototype = {
     this.preguntaAgregada.notificar();
   },
 
-  obtenerPosicionArr: function(id) {
-    var index = this.preguntas.findIndex(x => x.id === id);
-    return index
-  },
-
   //guia 1 LISTO!! Se borra la pregunta seleccionada por su Id
   borrarPregunta : function(id){
     this.preguntas = this.preguntas.filter(pregunta => pregunta.id !== id);
@@ -53,21 +48,22 @@ Modelo.prototype = {
     this.preguntasBorradas.notificar();
   },
 
-  editarPregunta: function(PreguntaAEditar) {
-    var nuevaPregunta = prompt ("Escriba su pregunta");
-    var index =  this.encontrarIndex(PreguntaAEditar[i].id);
-    this.preguntas[index].textoPregunta = nuevaPregunta;
-    this.guardar();
-    this.preguntaEditada.notificar();
+  obtenerPosicionArr: function(id) {
+    var index = this.preguntas.findIndex(x => x.id === id);
+    return index
   },
 
-  encontrarIndex: function(indice) {
-    for(var i=0; i<this.preguntas.length; i++){
-      if(indice==this.preguntas[i].id)
-      {
-        return i;
-      }
-    }
+  editarPregunta: function(idPregunta) {
+    var index = this.obtenerPosicionArr(idPregunta);
+    var verificarEdicion = alert ("Vas a editar la pregunta '"+ (this.preguntas[index].textoPregunta) + "'");
+    var nuevaPregunta = prompt ("Escriba la nueva pregunta");
+      if (nuevaPregunta === null || nuevaPregunta ==""){
+        alert ("No ingresaste la nueva pregunta!");
+      } else {
+          this.preguntas[index].textoPregunta = nuevaPregunta;
+        }
+      this.guardar();
+      this.preguntaEditada.notificar();
   },
 
   //se guardan las preguntas

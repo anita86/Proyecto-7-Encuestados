@@ -99,13 +99,13 @@ VistaAdministrador.prototype = {
       contexto.controlador.borrarTodo();
     });
 
-    e.botonEditarPregunta.click(function() {
-      var preguntaSeleccionada = parseInt($('.list-group-item.active').attr('id'));
-      if(isNaN(preguntaSeleccionada)) {
+    e.botonEditarPregunta.click(function(id) {
+      var id = parseInt($('.list-group-item.active').attr('id'));
+      if(isNaN(id)) {
           alert("Elegi la pregunta que querés editar");
           return
       }
-      contexto.controlador.editarPregunta(preguntaSeleccionada);
+      contexto.controlador.editarPregunta(id);
     });
 
   },
