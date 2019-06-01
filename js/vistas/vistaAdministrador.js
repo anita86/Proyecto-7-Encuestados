@@ -23,10 +23,6 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   this.modelo.preguntaEditada.suscribir(function() {
       contexto.reconstruirLista();
   });
-  
-  this.modelo.votoSumado.suscribir(function() {
-      contexto.reconstruirLista();
-  });
 };
 
 
@@ -74,13 +70,11 @@ VistaAdministrador.prototype = {
 
       $('[name="option[]"]').each(function() {
         //completar //guia 1 LISTO!!
-      var respuesta = $(this).val();
-
-      respuestas.push({ 'textoRespuesta' : respuesta,'cantidad' : 0});
-      })
+      respuestas.push({ 'textoRespuesta' : this.value,'cantidad' : 0});
+      });
 
       if(respuestas[0].textoRespuesta == ''){
-        alert('Escribi una pregunta con sus respuestas')
+        alert('Escribí una pregunta con sus respuestas');
         return
       }
       contexto.limpiarFormulario();
@@ -92,7 +86,7 @@ VistaAdministrador.prototype = {
     e.botonBorrarPregunta.click(function() {
       var id = parseInt($('.list-group-item.active').attr('id'));
       if(isNaN(id)) {
-        alert("Elegi que pregunta queres borrar");
+        alert("Elegí la pregunta que querés borrar");
       } else {
         contexto.controlador.borrarPregunta(id)
       }
@@ -106,7 +100,7 @@ VistaAdministrador.prototype = {
     e.botonEditarPregunta.click(function(id) {
       var id = parseInt($('.list-group-item.active').attr('id'));
       if(isNaN(id)) {
-          alert("Elegi la pregunta que querés editar");
+          alert("Elegí la pregunta que querés editar");
           return
       }
       contexto.controlador.editarPregunta(id);

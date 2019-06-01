@@ -11,21 +11,19 @@ var VistaUsuario = function(modelo, controlador, elementos) {
   this.modelo.preguntaAgregada.suscribir(function() {
     contexto.reconstruirLista();
   });
-  this.modelo.preguntaEliminada.suscribir(function() {
-    contexto.reconstruirLista();
-  });
 
-  this.modelo.preguntasBorradas.suscribir(function() {
+  this.modelo.preguntaEliminada.suscribir(function() {
     contexto.reconstruirLista();
   });
 
   this.modelo.preguntaEditada.suscribir(function() {
       contexto.reconstruirLista();
   });
-
-  this.modelo.votoSumado.suscribir(function() {
-      contexto.reconstruirLista();
+  this.modelo.votoAgregado.suscribir(function() {
+    contexto.reconstruirGrafico();
+    contexto.elementos.nombreUsuario.val('');
   });
+
 };
 
 VistaUsuario.prototype = {
@@ -36,7 +34,7 @@ VistaUsuario.prototype = {
     var contexto = this;
 
     elementos.botonAgregar.click(function() {
-      contexto.agregarVotos();
+      contexto.agregarVoto();
     });
 
     this.reconstruirGrafico();
@@ -46,7 +44,7 @@ VistaUsuario.prototype = {
   reconstruirGrafico: function(){
     var contexto = this;
     //obtiene las preguntas del local storage
-    var preguntas = JSON.parse(localStorage.getItem('preguntasAlmacenadas'));
+    var preguntas = this.modelo.preguntas;
     preguntas.forEach(function(clave){
       var listaParaGrafico = [[clave.textoPregunta, 'Cantidad']];
       var respuestas = clave.cantidadPorRespuesta;
@@ -67,8 +65,8 @@ VistaUsuario.prototype = {
       //completar
       //agregar a listaPreguntas un elemento div con valor "clave.textoPregunta", texto "clave.textoPregunta", id "clave.id"
       listaPreguntas.append($('<div>', {
-        texto: clave.textoPregunta,
-        valor: clave.textoPregunta,
+        text: clave.textoPregunta,
+        value: clave.textoPregunta,
         id: clave.id,
       }));
       var respuestas = clave.cantidadPorRespuesta;
@@ -91,7 +89,7 @@ VistaUsuario.prototype = {
     });
   },
 
-  agregarVotos: function(){
+  agregarVoto: function(){
     var contexto = this;
     $('#preguntas').find('div').each(function(){
         var nombrePregunta = $(this).attr('value');
