@@ -10,6 +10,7 @@ var Modelo = function() {
   this.preguntaEliminada = new Evento(this);
   this.preguntasBorradas = new Evento(this);
   this.preguntaEditada = new Evento(this);
+  this.agregarVoto = new Evento(this);
   this.recuperarPreguntas();
 
 };
