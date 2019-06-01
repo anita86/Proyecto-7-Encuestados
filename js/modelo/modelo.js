@@ -10,6 +10,8 @@ var Modelo = function() {
   this.preguntaEliminada = new Evento(this);
   this.preguntasBorradas = new Evento(this);
   this.preguntaEditada = new Evento(this);
+  this.votoAgregado = new Evento(this);
+
   this.recuperarPreguntas();
 
 };
@@ -48,31 +50,31 @@ Modelo.prototype = {
     this.preguntasBorradas.notificar();
   },
 
-  obtenerPosicionArr: function(id) {
-    var index = this.preguntas.findIndex(x => x.id === id);
-    return index
-  },
-
-  editarPregunta: function(idPregunta) {
-    var index = this.obtenerPosicionArr(idPregunta);
-    var verificarEdicion = alert ("Vas a editar la pregunta '"+ (this.preguntas[index].textoPregunta) + "'");
-    var nuevaPregunta = prompt ("Escriba la nueva pregunta");
-      if (nuevaPregunta === null || nuevaPregunta ==""){
-        alert ("No ingresaste la nueva pregunta!");
-      } else {
-          this.preguntas[index].textoPregunta = nuevaPregunta;
-        }
-      this.guardar();
-      this.preguntaEditada.notificar();
-  },
-
-  sumarVoto : function (){
-    var preguntaSeleccionada = this.preguntas.findIndex(x => x.id == idPregunta);
-    var respuestaVotada = this.preguntas[preguntaSeleccionada].cantidadPorRespuesta.findIndex(x => x.textoRespuesta === respuestaSeleccionada);
-    this.preguntas[preguntaSeleccionada].cantidadPorRespuesta[respuestaVotada].cantidad += 1;
-    this.guardar();
-    this.votoSumado.notificar();
-  },
+  // obtenerPosicionArr: function(id) {
+  //   var index = this.preguntas.findIndex(x => x.id === id);
+  //   return index
+  // },
+  //
+  // editarPregunta: function(idPregunta) {
+  //   var index = this.obtenerPosicionArr(idPregunta);
+  //   var verificarEdicion = alert ("Vas a editar la pregunta '"+ (this.preguntas[index].textoPregunta) + "'");
+  //   var nuevaPregunta = prompt ("Escriba la nueva pregunta");
+  //     if (nuevaPregunta === null || nuevaPregunta ==""){
+  //       alert ("No ingresaste la nueva pregunta!");
+  //     } else {
+  //         this.preguntas[index].textoPregunta = nuevaPregunta;
+  //       }
+  //     this.guardar();
+  //     this.preguntaEditada.notificar();
+  // },
+  //
+  // agregarVotos : function (nombrePregunta,respuestaSeleccionada){
+  //   var preguntaSeleccionada = this.preguntas.findIndex(x => x.id == idPregunta);
+  //   var respuestaVotada = this.preguntas[preguntaSeleccionada].cantidadPorRespuesta.findIndex(x => x.textoRespuesta === respuestaSeleccionada);
+  //   this.preguntas[preguntaSeleccionada].cantidadPorRespuesta[respuestaVotada].cantidad += 1;
+  //   this.guardar();
+  //   this.votoSumado.notificar();
+  //   },
 
   //se guardan las preguntas
   guardar: function(){
@@ -86,5 +88,48 @@ Modelo.prototype = {
         localStorage.setItem('preguntasAlmacenadas', JSON.stringify([]));
       }
   },
+
+  obtenerPregunta: function(valor){
+  var identificador;
+  if(typeof valor == 'number'){
+    identificador = 'id';
+  }
+  else{
+    identificador = 'textoPregunta'
+  }
+  for(var i=0;i<this.preguntas.length;++i){
+    if(this.preguntas[i][identificador] === valor){
+      return this.preguntas[i];
+    }
+  }
+  throw new Error("La pregunta no está definida");
+},
+//se agrega un voto
+agregarVoto: function(pregunta, respuesta) {
+   for(var i=0; i<pregunta.cantidadPorRespuesta.length;++i){
+   if (pregunta.cantidadPorRespuesta[i].textoRespuesta === respuesta) {
+     var indicePregunta = -1;
+     for(var j=0; j<this.preguntas.length; ++j){
+       if(this.preguntas[j].textoPregunta === pregunta.textoPregunta){
+         indicePregunta = j;
+       }
+     }
+     pregunta.cantidadPorRespuesta[i].cantidad += 1;
+     this.preguntas.splice(indicePregunta, 1, pregunta);
+   }
+ }
+ this.guardar();
+ this.votoAgregado.notificar();
+},
+
+//Guía 2 paso 1 funcionalidades Editar
+editarPregunta: function(id,nuevaPregunta) {
+  var preguntaAReemplazar = this.obtenerPregunta(id);
+  preguntaAReemplazar.textoPregunta = nuevaPregunta;
+
+  var preguntaAModificar = this.preguntas.splice(this.preguntas.indexOf(this.obtenerPregunta(id)), 1, preguntaAReemplazar);
+  this.guardar();
+  this.preguntaEditada.notificar();
+},
 
 }

@@ -16,14 +16,9 @@ var VistaUsuario = function(modelo, controlador, elementos) {
     contexto.reconstruirLista();
   });
 
-  this.modelo.preguntasBorradas.suscribir(function() {
-    contexto.reconstruirLista();
-  });
-
   this.modelo.preguntaEditada.suscribir(function() {
       contexto.reconstruirLista();
   });
-
   this.modelo.votoAgregado.suscribir(function() {
     contexto.reconstruirGrafico();
     contexto.elementos.nombreUsuario.val('');
