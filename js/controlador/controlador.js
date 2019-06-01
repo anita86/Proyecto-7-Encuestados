@@ -21,8 +21,8 @@ Controlador.prototype = {
       this.modelo.editarPregunta(id);
   },
 
-  votoSumado: function(nombrePregunta,respuestaSeleccionada) {
-      this.modelo.votoAgregado(nombrePregunta,respuestaSeleccionada);
+  agregarVoto: function(pregunta,respuestaSeleccionada) {
+    this.modelo.agregarVoto(pregunta,respuestaSeleccionada);
   },
 
 };
