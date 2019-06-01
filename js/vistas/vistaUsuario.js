@@ -21,7 +21,6 @@ var VistaUsuario = function(modelo, controlador, elementos) {
   });
   this.modelo.votoAgregado.suscribir(function() {
     contexto.reconstruirGrafico();
-    contexto.elementos.nombreUsuario.val('');
   });
 
 };
