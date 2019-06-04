@@ -68,9 +68,9 @@ VistaAdministrador.prototype = {
       var pregunta = e.pregunta.val();
       var respuestas = [];
 
-      $('[name="option[]"]').each(function() {
+      $('[name="option[]"]').each(function(index, element) {
         //completar //guia 1 LISTO!!
-      respuestas.push({ 'textoRespuesta' : this.value,'cantidad' : 0});
+      respuestas.push({ 'textoRespuesta' :  $(this).val(),'cantidad' : 0});
       });
 
       if(respuestas[0].textoRespuesta == ''){
@@ -78,6 +78,7 @@ VistaAdministrador.prototype = {
         return
       }
       contexto.limpiarFormulario();
+      respuestas.pop()
       contexto.controlador.agregarPregunta(pregunta, respuestas);
     });
 

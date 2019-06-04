@@ -18,13 +18,15 @@ var Modelo = function() {
 Modelo.prototype = {
   //guia 1 LISTO!! se obtiene el id más grande asignado a una pregunta
   obtenerUltimoId: function() {
-    var maxId = -1;
-    for (var i = 0; i < this.preguntas.length; ++i){
-      if (this.preguntas[i].id > maxId)
-        maxId = this.preguntas[i].id;
+    let max = 0;
+    this.preguntas.forEach(function (preg) {
+      if (preg.id > max) {
+        max = preg.id;
       }
-    return maxId;
+    });
+    return max;
   },
+
 
   //se agrega una pregunta dado un nombre y sus respuestas
   agregarPregunta: function(nombre, respuestas) {
@@ -54,8 +56,8 @@ Modelo.prototype = {
     return index
   },
 
-  editarPregunta: function(idPregunta) {
-    var index = this.obtenerPosicionArr(idPregunta);
+  editarPregunta: function(id) {
+    var index = this.obtenerPosicionArr(id);
     var verificarEdicion = alert ("Vas a editar la pregunta '"+ (this.preguntas[index].textoPregunta) + "'");
     var nuevaPregunta = prompt ("Escriba la nueva pregunta");
       if (nuevaPregunta === null || nuevaPregunta ==""){
@@ -67,13 +69,22 @@ Modelo.prototype = {
       this.preguntaEditada.notificar();
   },
 
-  agregarVoto : function (){
-    var preguntaSeleccionada = this.preguntas.findIndex(x => x.id == idPregunta);
-    var respuestaVotada = this.preguntas[preguntaSeleccionada].cantidadPorRespuesta.findIndex(x => x.textoRespuesta === respuestaSeleccionada);
-    this.preguntas[preguntaSeleccionada].cantidadPorRespuesta[respuestaVotada].cantidad += 1;
-    this.guardar();
-    this.agregarVoto.notificar();
-  },
+  agregarVoto : function (pregunta, respuesta){
+  for(var i=0; i<this.preguntas.length; i++){
+  if(pregunta==this.preguntas[i].textoPregunta)
+  {
+    for(var j=0; j<this.preguntas[i].cantidadPorRespuesta.length; j++){
+      if(this.preguntas[i].cantidadPorRespuesta[j].textoRespuesta == respuesta){
+        this.preguntas[i].cantidadPorRespuesta[j].cantidad++;
+        this.guardar();
+        this.votoAgregado.notificar();
+        return 0;
+      }
+    }
+  }
+}
+
+},
 
   //se guardan las preguntas
   guardar: function(){
