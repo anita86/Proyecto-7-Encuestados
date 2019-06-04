@@ -11,7 +11,7 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   this.modelo.preguntaAgregada.suscribir(function() {
     contexto.reconstruirLista();
   });
-//guia 1 LISTO!!
+  //guia 1 LISTO!!
   this.modelo.preguntaEliminada.suscribir(function() {
     contexto.reconstruirLista();
   });
@@ -21,7 +21,7 @@ var VistaAdministrador = function(modelo, controlador, elementos) {
   });
 
   this.modelo.preguntaEditada.suscribir(function() {
-      contexto.reconstruirLista();
+    contexto.reconstruirLista();
   });
 };
 
@@ -35,7 +35,7 @@ VistaAdministrador.prototype = {
     validacionDeFormulario();
   },
 
-  construirElementoPregunta: function(pregunta){
+  construirElementoPregunta: function(pregunta) {
     var contexto = this;
     //completar
     //guia 1 LISTO!!asignar a nuevoitem un elemento li con clase "list-group-item", id "pregunta.id" y texto "pregunta.textoPregunta"
@@ -43,7 +43,7 @@ VistaAdministrador.prototype = {
     var interiorItem = $('.d-flex');
     var titulo = interiorItem.find('h5');
     titulo.text(pregunta.textoPregunta);
-    interiorItem.find('small').text(pregunta.cantidadPorRespuesta.map(function(resp){
+    interiorItem.find('small').text(pregunta.cantidadPorRespuesta.map(function(resp) {
       return " " + resp.textoRespuesta;
     }));
     nuevoItem.html($('.d-flex').html());
@@ -54,12 +54,12 @@ VistaAdministrador.prototype = {
     var lista = this.elementos.lista;
     lista.html('');
     var preguntas = this.modelo.preguntas;
-    for (var i=0;i<preguntas.length;++i){
+    for (var i = 0; i < preguntas.length; ++i) {
       lista.append(this.construirElementoPregunta(preguntas[i]));
     }
   },
 
-  configuracionDeBotones: function(){
+  configuracionDeBotones: function() {
     var e = this.elementos;
     var contexto = this;
 
@@ -70,10 +70,13 @@ VistaAdministrador.prototype = {
 
       $('[name="option[]"]').each(function(index, element) {
         //completar //guia 1 LISTO!!
-      respuestas.push({ 'textoRespuesta' :  $(this).val(),'cantidad' : 0});
+        respuestas.push({
+          'textoRespuesta': $(this).val(),
+          'cantidad': 0
+        });
       });
 
-      if(respuestas[0].textoRespuesta == ''){
+      if (respuestas[0].textoRespuesta == '') {
         alert('Escribí una pregunta con sus respuestas');
         return
       }
@@ -86,7 +89,7 @@ VistaAdministrador.prototype = {
     //guia 1 LISTO!! Registro boton para borrar la pregunta
     e.botonBorrarPregunta.click(function() {
       var id = parseInt($('.list-group-item.active').attr('id'));
-      if(isNaN(id)) {
+      if (isNaN(id)) {
         alert("Elegí la pregunta que querés borrar");
       } else {
         contexto.controlador.borrarPregunta(id)
@@ -100,16 +103,16 @@ VistaAdministrador.prototype = {
 
     e.botonEditarPregunta.click(function(id) {
       var id = parseInt($('.list-group-item.active').attr('id'));
-      if(isNaN(id)) {
-          alert("Elegí la pregunta que querés editar");
-          return
+      if (isNaN(id)) {
+        alert("Elegí la pregunta que querés editar");
+        return
       }
       contexto.controlador.editarPregunta(id);
     });
 
   },
 
-  limpiarFormulario: function(){
+  limpiarFormulario: function() {
     $('.form-group.answer.has-feedback.has-success').remove();
   },
 
